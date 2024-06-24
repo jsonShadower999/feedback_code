@@ -133,6 +133,7 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } */
   </style>
 </head>
+
 <body>
   <h1>Database Form</h1>
   <form
@@ -147,14 +148,15 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
       placeholder="Type your email address"
       class="input"
     />
+  
+    <div class="error">
     <?php
-    // Initialize $emailErr variable
-    $emailErr = isset($_GET['emailErr']) ? $_GET['emailErr'] : null;
-
-    if (!empty($emailErr)) {
-        echo '<p style="color: red;">Error: ' . htmlspecialchars($emailErr) . '</p>';
+    // Check if $emailErr is set and not empty
+    if (isset($emailErr) && !empty($emailErr)) {
+      echo '<span class="error">' . $emailErr . '</span>';
     }
     ?>
+  </div>
     <br><br><br>
     <label for="Name" name="Name" id="Name">Provide us your Name :</label> 
     <input type="text" name="Name" placeholder="Type Your Name" class="input"/>
@@ -190,18 +192,27 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <input type="radio" id="star10" name="rating" value="10">
   <label for="star10">10</label>
 </div>
+
+<div class="error">
+    <?php
+    // Check if $emailErr is set and not empty
+    if (isset($rateErr) && !empty($rateErr)) {
+      echo '<span class="error">' . $rateErr . '</span>';
+    }
+    ?>
+  </div>
     <div class="card">
         <h2> Star Rating :</h2>
         <br />
-        <input type="radio" id="star5" name="rating1" value="1" onclick="gfg(1)" />
+        <input type="radio" id="star5" name="rating1" value="1" onclick="starlogic(1)" />
         <label for="star5" class="star">★</label>
-      <input type="radio" id="star5" name="rating1" value="2" onclick="gfg(2)" />
+      <input type="radio" id="star5" name="rating1" value="2" onclick="starlogic(2)" />
         <label for="star5" class="star">★</label>
-      <input type="radio" id="star5" name="rating1" value="3" onclick="gfg(3)" />
+      <input type="radio" id="star5" name="rating1" value="3" onclick="starlogic(3)" />
         <label for="star5" class="star">★</label>
-      <input type="radio" id="star5" name="rating1" value="4" onclick="gfg(4)" />
+      <input type="radio" id="star5" name="rating1" value="4" onclick="starlogic(4)" />
         <label for="star5" class="star">★</label>
-      <input type="radio" id="star5" name="rating1" value="5" onclick="gfg(5)" />
+      <input type="radio" id="star5" name="rating1" value="5" onclick="starlogic(5)" />
         <label for="star5" class="star">★</label>
    
        
@@ -222,6 +233,15 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
 </select>
+
+<div class="error">
+    <?php
+    // Check if $emailErr is set and not empty
+    if (isset($countryErr) && !empty($countryErr)) {
+      echo '<span class="error">' . $countryErr . '</span>';
+    }
+    ?>
+  </div>
 <br><br><br><br><br>
     
 
@@ -258,7 +278,7 @@ let output =
     document.getElementById("output");
  
 // Funtion to update rating
-function gfg(n) {
+function starlogic(n) {
     remove();
     let cls='';
     for (let i = 0; i < n; i++) {

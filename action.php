@@ -15,28 +15,31 @@ if (!is_null($post_action)) {
             // Validate inputs
             $error = '';
             $emailErr = '';
+            $nameErr = '';
+            $countryErr = '';
+            $rateErr = '';
 
             if (empty($address) || !filter_var($address, FILTER_VALIDATE_EMAIL)) {
-                $error = 'Invalid email address!';
+               
                 $emailErr='Invalid mail id';
                 
                 show_index('Invalid Email, Provide a Valid Email');
 
             } elseif (empty($name)) {
-                $error = 'Name cannot be empty!';
+                $nameErr = 'Name cannot be empty!';
                 show_index('Name is required ');
                
             } elseif (strlen($name) > 50) {
-                $error = 'Name is too long to be saved!';
+                $nameErr = 'Name is too long to be saved!';
                 show_index('Name is too long to be saved !');
             } elseif ($rating < 1 || $rating > 10) {
-                $error = 'Rating should be between 1 and 10!';
+                $rateErr = 'Rating should be between 1 and 10!';
                 show_index('Rating should be between 1 and 10!');
             } elseif (empty($country)) {
-                $error = 'Please provide the country you live in!';
+                $countryErr = 'Please provide the country you live in!';
                show_index('Please provide the country you live in!');
             } elseif (emailExists($address)) {
-               
+                $emailErr="Email Id is mandatory ";
                 show_index('This email address has already been recorded. Thank you for visiting us!');
             }
 
@@ -44,7 +47,7 @@ if (!is_null($post_action)) {
                 show_index($error); // Redirect back to index.php with error message
             } else {
                 // If all validations pass, add email to database
-                add_email($address, $name, $rating, $country);
+                add_userdetails($address, $name, $rating, $country);
                 $_SESSION['submitted'] = true;
             }
             break;
@@ -81,7 +84,7 @@ function emailExists($address)
 }
 
 // Function to add email to database
-function add_email($address, $name, $rating, $country)
+function add_userdetails($address, $name, $rating, $country)
 {
     require_once 'config.php';
 
